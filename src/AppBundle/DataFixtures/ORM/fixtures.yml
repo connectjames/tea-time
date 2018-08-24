@@ -1,0 +1,15 @@
+AppBundle\Entity\TeaGroup:
+  tea_group_{1..10}:
+    createdAt: <dateTimeBetween('-5 years', 'now')>
+    name: <word()>
+
+
+AppBundle\Entity\User:
+  user_{1..100}:
+    createdAt: <dateTimeBetween('-5 years', 'now')>
+    email: connectjames+<current()>@gmail.com
+    plainPassword: iliketurtles
+    roles: ['ROLE_ADMIN']
+    firstName: <firstName()>
+    lastName: <name()>
+    cupsTotal: <numberBetween(1, 1000)>

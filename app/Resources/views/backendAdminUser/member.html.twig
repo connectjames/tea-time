@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div id="member">
+        <h1>My TEA members!</h1>
+
+        <a class="w3-button w3-circle w3-xxlarge w3-teal w3-hover-black w3-right w3-margin-bottom" href="{{ absolute_url(path('backend_admin_user_member_create')) }}" title="Add a member">
+            <i class="fa fa-user-plus"></i>
+        </a>
+
+        <input class="w3-input w3-border w3-margin-bottom" oninput="w3.filterHTML('#members', '.item', this.value)" placeholder="Search for members..">
+
+        <table id="members" class="w3-table w3-bordered w3-striped w3-border test w3-hoverable">
+            <tr class="w3-green">
+                <th class="w3-center">Member's Name</th>
+                <th class="w3-center">Member's Level</th>
+                <th class="w3-center">Cups Total</th>
+                <th class="w3-center">Activated</th>
+                <th class="w3-center">Delete</th>
+            </tr>
+            {% for member in members %}
+                {% if member.id != app.user.id %}
+                    <tr class="item">
+                        <td class="w3-center">{{ member.fullName }}</td>
+                        <td class="w3-center">
+                            <div class="w3-cell-row">
+                                <input
+                                        type="range"
+                                        min="1" max="100"
+                                        value="{{ member.level }}"
+                                        class="slider w3-center w3-cell-middle w3-mobile js-update-level-member"
+                                        data-url="{{ path('backend_admin_user_level_member_update', {
+                                            memberId: member.id
+                                        }) }}"
+                                >
+                            </div>
+                        </td>
+                        <td class="w3-center">{{ member.cupsTotal }}</td>
+                        <td>
+                            <div class="w3-cell-row">
+                                {% if member.activate %}
+                                    <div class="w3-container w3-center w3-cell w3-mobile">
+                                        <label class="switch">
+                                            <input type="checkbox"
+                                                   checked
+                                                   class="js-deactivate-member"
+                                                   data-url="{{ path('backend_admin_user_activate_member_update', {
+                                                       memberId: member.id,
+                                                       activateStatus: 'deactivate'
+                                                   }) }}"
+                                            >
+                                            <span class="slider-switch round"></span>
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="w3-container w3-center w3-cell w3-mobile">
+                                        <label class="switch">
+                                            <input type="checkbox"
+                                                   class="js-activate-member"
+                                                   data-url="{{ path('backend_admin_user_activate_member_update', {
+                                                       memberId: member.id,
+                                                       activateStatus: 'activate'
+                                                   }) }}"
+                                            >
+                                            <span class="slider-switch round"></span>
+                                        </label>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="w3-cell-row">
+                                <a href="#"
+                                   class="w3-container w3-center w3-cell w3-mobile w3-xlarge js-delete-member"
+                                   data-url="{{ path('backend_admin_user_member_delete', {
+                                       memberId: member.id,
+                                   }) }}"
+                                >
+                                    <span class="fa fa-trash w3-text-red"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/backendAdmin/Member.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            var $member = $('#member');
+
+            var member = new Member($member);
+        });
+    </script>
+{% endblock %}

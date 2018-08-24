@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="w3-container w3-teal w3-margin-top">
+                    <h1>Register!</h1>
+                </div>
+
+                {{ form_start(formRegister, {attr: {class: 'w3-container w3-card-4'} }) }}
+
+                    <h2>Your team</h2>
+
+                    {{ form_row(formRegister.groupName) }}
+
+                    <h2>About yourself</h2>
+
+                    {{ form_row(formRegister.email) }}
+                    {{ form_row(formRegister.plainPassword.first, {
+                        'label': 'Password'
+                    }) }}
+                    {{ form_row(formRegister.plainPassword.second, {
+                        'label': 'Password Again'
+                    }) }}
+                    {{ form_row(formRegister.firstName) }}
+                    {{ form_row(formRegister.lastName) }}
+                    {{ form_row(formRegister.preferences, {
+                        'label': 'What is your favorite cupa?'
+                    }) }}
+                    <button type="submit" class="w3-btn w3-margin-bottom w3-right w3-teal" formnovalidate>Register</button>
+                {{ form_end(formRegister) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,45 @@
+<div id="preference">
+    <h1>My TEA preferences!</h1>
+
+    <table id="preferences" class="w3-table">
+        <tr class="w3-margin">
+            <td class="w3-center">
+                <input type="text" class="w3-input w3-border" placeholder="New cuppa in HERE">
+            </td>
+            <td>
+                <div class="w3-cell-row">
+                    <a href="#"
+                       class="w3-container w3-center w3-cell w3-mobile w3-xlarge w3-btn w3-teal w3-border w3-border-green js-create-preference"
+                       data-url="{{ path('frontend_user_preference-create') }}"
+                    >Add TEA preference!</a>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="w3-margin-top"></div>
+    <input class="w3-input w3-border w3-margin-bottom" oninput="w3.filterHTML('#preferences', '.item', this.value)" placeholder="Search for TEA preferences..">
+    <table id="preferences" class="w3-table w3-bordered w3-striped w3-border w3-hoverable">
+        <tr class="w3-green">
+            <th class="w3-center">Preferences</th>
+            <th class="w3-center">Delete</th>
+        </tr>
+
+        {% for key, drink in user.preferences %}
+            <tr class="item">
+                <td class="w3-center">{{ drink }}</td>
+                <td>
+                    <div class="w3-cell-row">
+                        <a href="#"
+                           class="w3-container w3-center w3-cell w3-mobile w3-xlarge js-delete-preference"
+                           data-url="{{ path('frontend_user_preference-delete', {
+                               preferenceKey: key,
+                           }) }}"
+                        >
+                            <span class="fa fa-trash w3-text-red"></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

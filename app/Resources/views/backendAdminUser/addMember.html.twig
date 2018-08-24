@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div id="member">
+
+        <div class="w3-container w3-teal w3-margin-top">
+            <h1>Add a TEA members!</h1>
+        </div>
+
+        {{ form_start(formMember, {attr: {class: 'w3-container w3-card-4'} }) }}
+
+        {{ form_row(formMember.email) }}
+        {{ form_row(formMember.plainPassword.first, {
+            'label': 'Password'
+        }) }}
+        {{ form_row(formMember.plainPassword.second, {
+            'label': 'Password Again'
+        }) }}
+        {{ form_row(formMember.firstName) }}
+        {{ form_row(formMember.lastName) }}
+        {{ form_row(formMember.level, {attr: {class: 'slider w3-center w3-cell-middle w3-mobile', min:1, max:100} }) }}
+        <button type="submit" class="w3-btn w3-margin-bottom w3-right w3-teal" formnovalidate>Add new TEA member</button>
+        {{ form_end(formMember) }}
+
+    </div>
+{% endblock %}

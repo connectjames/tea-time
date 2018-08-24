@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Home Page - User logged in!</h1>
+    <ul>
+        <li>See last cup of tea</li>
+        <li>See button "Launch cup of teas round"</li>
+        <li>React JS on click - Tea Mapping</li>
+    </ul>
+    {{ teaGroup.name }}
+    <br>
+    <ul>
+        {% for member in teaGroup.members|sort %}
+            <li>{{ member.fullName }}</li>
+        {% endfor %}
+    </ul>
+    <div class="w3-margin w3-center">
+        <h3><a class="w3-btn w3-teal" href="#" title="Launch new TEA round!">
+                Launch new TEA round!
+            </a></h3>
+    </div>
+    <table id="members" class="w3-table w3-bordered w3-striped w3-border test w3-hoverable">
+        <tr class="w3-green">
+            <th class="w3-center">Member's Name</th>
+            <th class="w3-center">Preference</th>
+            <th class="w3-center"><i class="fa fa-coffee"></i></th>
+        </tr>
+        {% for member in teaGroup.members %}
+            {% if member.id == app.user.id %}
+            <tr>
+                <td class="w3-center">{{ member.fullName }}</td>
+                <td class="w3-center">
+                    <select class="w3-select w3-border w3-border-teal w3-padding enabled" name="preference">
+                        <option value="" disabled selected>Click here to choose your preference</option>
+                        {% for key, preference in member.preferences %}
+                            <option value="{{ key }}">{{ preference }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="w3-center">
+                    Yes
+                </td>
+            </tr>
+            {% else %}
+                <tr>
+                    <td class="w3-center">{{ member.fullName }}</td>
+                    <td class="w3-center select">
+                        <select class="w3-select" name="preference" disabled>
+                            <option value="" disabled selected>Choose your preference</option>
+                            {% for key, preference in member.preferences %}
+                                <option value="{{ key }}">{{ preference }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="w3-center">
+                        Yes
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+{% endblock %}
